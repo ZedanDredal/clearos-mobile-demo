@@ -1,0 +1,90 @@
+#!/bin/bash
+
+# mobile-demo    Start up the Mobile Demo daemon
+#
+# chkconfig: 2345 55 25
+# description: Example mobile application for Android™ devices.
+#
+# pidfile: /var/run/webconfig/mobile-demo.pid
+
+### BEGIN INIT INFO
+# Provides: mobile-demo
+# Required-Start: $local_fs $network $syslog
+# Required-Stop: $local_fs $syslog
+# Should-Start: $syslog
+# Should-Stop: $network $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Start up the Mobile Demo daemon
+# Description: Example mobile application for Android™ devices.
+### END INIT INFO
+
+# Source function library.
+. /etc/init.d/functions
+
+RETVAL=0
+prog="/usr/sbin/webconfig-service"
+PID_FILE=/var/run/webconfig/mobile-demo.pid
+
+start() {
+    echo -n "Starting mobile-demo: "
+    daemon --user webconfig $prog -a mobile_demo -s Mobile_Demo_Service -p $PID_FILE
+    RETVAL=$?
+    if [ $RETVAL -eq 0 ]; then
+        success
+        touch /var/lock/subsys/mobile-demo
+    else
+        failure
+    fi
+    echo
+    return $RETVAL
+}   
+
+stop() {
+    echo -n "Shutting down mobile-demo: "
+    killproc -p $PID_FILE mobile-demo
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/mobile-demo
+    echo
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+    ;;
+    stop)
+        stop
+    ;;
+    status)
+        status -p $PID_FILE mobile-demo
+    ;;
+    restart)
+        stop
+        start
+    ;;
+    reload)
+        killproc -p $PID_FILE mobile-demo SIGHUP
+        RETVAL=$?
+        echo
+    ;;
+    condrestart)
+        if [ -f /var/lock/subsys/mobile-demo ]; then
+            stop
+            start
+            RETVAL=$?
+        fi
+    ;;
+    condreload)
+        if [ -f /var/lock/subsys/mobile-demo ]; then
+            killproc -p $PID_FILE mobile-demo SIGHUP
+            RETVAL=$?
+            echo
+        fi
+    ;;
+    *)
+    echo "Usage: mobile-demo {start|stop|status|reload|restart|condrestart|condreload}"
+    exit 1
+    ;;
+esac
+exit $RETVAL
