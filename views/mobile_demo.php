@@ -59,10 +59,10 @@ $this->lang->load('mobile_demo');
 <p>To remove an account, long-press over the system name from the main dialog, or navigate to <strong>System Settings > Accounts & sync</strong> and remove the Mobile Demo account the usual way.</p>
 
 <h1><? echo lang('mobile_demo_source_code'); ?></h1>
-<p>The source code for both the Android™ and Webconfig applications is publically available from the ClearFoundation <a href="http://www.clearfoundation.com/docs/developer/source_code/">SVN server</a>.</p>
+<p>The source code for both the Android™ and Webconfig applications is publically available from the ClearFoundation <a href="http://www.clearfoundation.com/docs/developer/source_code/">Git repository</a>.</p>
 <ul>
-<li>Webconfig: svn://scm.clearfoundation.com/clearos/webconfig/apps/mobile_demo</li>
-<li>Android™: svn://scm.clearfoundation.com/clearos/packages/clearos-mobile-demo</li>
+<li>Webconfig: https://github.com/clearos/webconfig/tree/master/apps and pick mobile_demo </li>
+<li>Android™: https://github.com/clearos-packages/clearos-mobile-demo</li>
 </ul>
 
 <h1><? echo lang('mobile_demo_screen_shots'); ?></h1>
